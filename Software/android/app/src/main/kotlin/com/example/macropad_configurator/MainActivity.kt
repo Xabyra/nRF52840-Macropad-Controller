@@ -1,4 +1,4 @@
-package com.example.macropadapp
+package com.example.macropad_configurator
 
 import io.flutter.embedding.android.FlutterActivity
 

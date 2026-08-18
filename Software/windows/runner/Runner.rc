@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "macropadapp" "\0"
+            VALUE "FileDescription", "macropad_configurator" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "macropadapp" "\0"
+            VALUE "InternalName", "macropad_configurator" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "macropadapp.exe" "\0"
-            VALUE "ProductName", "macropadapp" "\0"
+            VALUE "OriginalFilename", "macropad_configurator.exe" "\0"
+            VALUE "ProductName", "macropad_configurator" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
