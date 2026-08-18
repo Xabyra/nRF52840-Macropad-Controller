@@ -1,34 +1,66 @@
-# Macropad nRF52840 Project
+# nRF52840 Custom Wireless Macropad
 
-This repository contains the complete project for a custom, programmable macropad built around the nRF52840 microcontroller. It features a Bluetooth Low Energy (BLE) HID interface and a cross-platform desktop application (developed with Flutter) for intuitive configuration. This project showcases a full-stack approach, integrating embedded systems development with modern UI/UX design.
+<p align="center">
+  <img src="docs/device.jpg" alt="Macropad Hardware" width="700">
+</p>
 
-## Project Overview
+An end-to-end open-source wireless macropad built on top of the **Nordic nRF52840** SoC. The system features custom hardware design, **Zephyr RTOS** multi-threaded firmware, and a dedicated **Flutter** desktop companion application for cross-platform configuration.
 
-The Macropad nRF52840 is designed to enhance productivity by providing a highly customizable input device. Users can define complex key sequences, assign functions to a 3x4 key matrix and a rotary encoder, and manage multiple profiles for different applications.
+---
 
-## Key Features
+## ⚡ Key Highlights
 
-*   **Bluetooth Low Energy (BLE) HID**: Connects wirelessly as a standard keyboard and mouse device to computers and other compatible devices.
-*   **Customizable Keymaps**: Assign individual keys and encoder actions (press, clockwise, counter-clockwise) to standard keyboard keys, mouse clicks/scrolls, or custom sequences.
-*   **Multiple Profiles**: Store and switch between different configuration profiles, allowing for tailored setups for various tasks or applications (e.g., "Photoshop Profile", "Coding Profile").
-*   **Sequence/Macro Playback**: Program complex sequences of key presses with customizable delays, including random delays for more human-like input.
-*   **Backlight Control**: Integrated PWM-controlled backlight with adjustable brightness and on/off toggle.
-*   **Battery Monitoring**: Monitors and reports battery level via BLE.
-*   **Low-Power Modes**: Efficient power management with inactivity-based sleep and system-off modes to maximize battery life.
-*   **Desktop Configuration Application**: A user-friendly Flutter application for Windows and Linux to manage all macropad settings over BLE.
-*   **Zephyr RTOS Firmware**: Robust and efficient embedded software built on the Zephyr Real-Time Operating System.
+* **Nordic nRF52840 SoC**: BLE HID keyboard & mouse profiles with low-power optimizations.
+* **Dual Layer Architecture**: Full-featured matrix scanning + rotary encoder control.
+* **Zephyr RTOS Engine**: Event-driven multitasking, hardware-accelerated BLE stack, and flash settings storage.
+* **Companion App**: Cross-platform desktop GUI (Windows/Linux) built with Flutter for live keymap reassignment and sequence management.
+* **Custom PCB**: Designed from schematic to Gerber files using KiCad.
 
-## Project Structure
+---
 
-This repository is divided into two main components:
+## 🛠️ System Overview
 
-*   **`Firmware/`**: Contains the embedded software for the nRF52840 microcontroller. This includes the Zephyr RTOS application, BLE services, hardware drivers, and logic for input processing and power management.
-*   **`Software/`**: Contains the cross-platform desktop application developed with Flutter. This application provides the graphical user interface for configuring the macropad's profiles, keymaps, and sequences via BLE.
+### 1. Hardware Design (KiCad)
+Custom schematic and 2-layer PCB layout developed in KiCad, optimized for Nordic nRF52-series wireless routing and mechanical switch integration.
 
-## Getting Started
+<p align="center">
+  <img src="docs/kicad_3d.png" alt="KiCad PCB Layout" width="650">
+</p>
 
-To get started with building and exploring this project, please refer to the detailed `README.md` files within each sub-directory:
+* KiCad project source files, schematics (PDF), and production-ready Gerbers are located in the [`/Hardware`](./Hardware) directory.
 
-*   **Firmware Readme**
-*   **Software Readme**
+---
 
+### 2. Firmware (Zephyr RTOS / C++)
+Event-driven embedded architecture leveraging modern RTOS primitives:
+* **Key Matrix Scanner**: Hardware debounce and rapid matrix polling.
+* **Encoder Handler**: Hardware quadrature decoding with acceleration.
+* **BLE HID Profile**: Seamless connectivity and automatic reconnect routine.
+* **Power Management**: Aggressive sleep and system-off modes for prolonged battery endurance.
+
+Source code and build instructions are located in the [`/Firmware`](./Firmware) directory.
+
+---
+
+### 3. Desktop Software (Flutter)
+A responsive desktop application for live parameter synchronization over BLE:
+
+<p align="center">
+  <img src="docs/app_ui.jpg" alt="Flutter Configuration App" width="650">
+</p>
+
+* Intuitive matrix binding and layer configuration.
+* Macro sequence editor with custom delays.
+* Real-time battery status and profile switcher.
+
+Source code and setup instructions are located in the [`/Software`](./Software) directory.
+
+---
+
+## 📂 Repository Structure
+
+```text
+├── Hardware/   # KiCad schematics, PCB layout, Gerbers, BOM
+├── Firmware/   # Zephyr RTOS source code, devicetree overlays, prj.conf
+├── Software/   # Flutter configuration application source
+└── docs/       # Media, hardware photos, and diagrams
