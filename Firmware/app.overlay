@@ -1,0 +1,120 @@
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/nrf-pinctrl.h>
+#include <dt-bindings/adc/adc.h>
+
+&pinctrl {
+    /* Конфігурація для PWM */
+    pwm0_default: pwm0_default {
+        group1 {
+            psels = <NRF_PSEL(PWM_OUT0, 1, 6)>;
+            nordic,drive-mode = <NRF_DRIVE_H0H1>;
+        }; /* <--- Ось ці крапки з комою були пропущені */
+    };
+
+    pwm0_sleep: pwm0_sleep {
+        group1 {
+            psels = <NRF_PSEL(PWM_OUT0, 1, 6)>;
+            low-power-enable;
+        }; /* <--- */
+    };
+
+    /* Конфігурація для QDEC (Енкодер) */
+    qdec_default: qdec_default {
+        group1 {
+            psels = <NRF_PSEL(QDEC_A, 0, 9)>, 
+                    <NRF_PSEL(QDEC_B, 0, 10)>;
+            bias-pull-up;
+        }; /* <--- */
+    };
+    
+    qdec_sleep: qdec_sleep {
+        group1 {
+            psels = <NRF_PSEL(QDEC_A, 0, 9)>, 
+                    <NRF_PSEL(QDEC_B, 0, 10)>;
+            bias-pull-up;
+            low-power-enable;
+        }; /* <--- */
+    };
+};
+
+
+/* Активація PWM */
+&pwm0 {
+    status = "okay";
+    pinctrl-0 = <&pwm0_default>;
+    pinctrl-1 = <&pwm0_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+/* 2. Активація апаратного декодера для енкодера */
+&qdec {
+    status = "okay";
+    pinctrl-0 = <&qdec_default>;
+    pinctrl-1 = <&qdec_sleep>;
+    pinctrl-names = "default", "sleep";
+    steps = <24>;
+    led-pre = <0>;
+};
+
+&slot1_partition {
+    reg = <0x82000 0x73000>;
+};
+
+&flash0 {
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        app_storage_partition: partition@f5000 {
+            label = "app-storage";
+            reg = <0xf5000 0x3000>;
+        };
+    };
+};
+
+/ {
+    /* Створюємо зручний псевдонім для PWM LED */
+    pwm_leds {
+        compatible = "pwm-leds";
+        backlight_led: pwm_led_0 {
+            /* Період 1 мілісекунда (1000 Гц) - ідеально, щоб не мерехтіло на камері */
+            pwms = <&pwm0 0 PWM_MSEC(1) PWM_POLARITY_NORMAL>; 
+        };
+    };
+    /* 4. Матриця клавіатури та кнопка енкодера */
+    zephyr,user {
+        /* Battary (Rows): P0.31 */
+        io-channels = <&adc 7>;
+
+        /* Рядочки (Rows): P0.11, P1.00, P0.24 */
+        row0-gpios = <&gpio0 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+        row1-gpios = <&gpio1 0  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+        row2-gpios = <&gpio0 24 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+        
+        /* Стовпчики (Cols): P0.06, P1.13, P1.15, P0.2 */
+        col0-gpios = <&gpio0 6  GPIO_ACTIVE_HIGH>;
+        col1-gpios = <&gpio1 13 GPIO_ACTIVE_HIGH>;
+        col2-gpios = <&gpio1 15 GPIO_ACTIVE_HIGH>;
+        col3-gpios = <&gpio0 2 GPIO_ACTIVE_HIGH>;
+        
+        /* Кнопка енкодера: P1.04 */
+        enc-btn-gpios = <&gpio1 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        backlight-gpios = <&gpio1 6 GPIO_ACTIVE_HIGH>; 
+    };
+};
+
+&adc {
+    status = "okay";
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    channel@7 {
+        reg = <7>;
+        zephyr,gain = "ADC_GAIN_1_6";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS, 40)>;
+        zephyr,input-positive = <8>;   /* AIN7 = P0.31 */
+        zephyr,resolution = <12>;
+    };
+};
