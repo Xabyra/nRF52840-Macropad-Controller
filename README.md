@@ -32,15 +32,3 @@ To get started with building and exploring this project, please refer to the det
 *   **Firmware Readme**
 *   **Software Readme**
 
-## Portfolio Relevance
-
-This project demonstrates expertise in:
-
-*   **Embedded Systems Development**: C programming, RTOS (Zephyr), hardware interaction (GPIO, PWM, ADC), low-power design, device tree configuration.
-*   **Bluetooth Low Energy (BLE)**: Implementing custom GATT services, HID profiles, advertising, and bonding.
-*   **Cross-Platform Application Development**: Flutter framework, Dart programming, desktop application architecture, BLE communication from desktop.
-*   **Full-Stack Integration**: Seamless communication and interaction between embedded hardware and a desktop application.
-*   **UI/UX Design**: Creating an intuitive and functional user interface for device configuration.
-*   **Version Control & Build Systems**: CMake, `west` (Zephyr), `flutter` CLI.
-
-This project is a comprehensive example of bringing a hardware product to life with both robust embedded software and a polished user-facing application.
