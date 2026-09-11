@@ -38,7 +38,7 @@ This directory contains the embedded software for the Macropad nRF52840, develop
 
 ### Prerequisites
 
-1.  **Zephyr SDK**: Install the Zephyr SDK. Based on the project's `CMakeCache.txt`, version `0.16.5` was used.
+1.  **Zephyr SDK**: This project was developed with Zephyr SDK `0.16.5`.
     ```bash
     # Download the SDK (adjust version if needed)
     wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5/zephyr-sdk-0.16.5_linux-x86_64.tar.xz
@@ -65,7 +65,7 @@ This directory contains the embedded software for the Macropad nRF52840, develop
 
 1.  Navigate to the `Firmware` directory of this project:
     ```bash
-    cd c:\Users\Vitalii\Desktop\Macropad nrf52840\Firmware
+    cd Firmware
     ```
 2.  Build the application for the `nrf52840dk_nrf52840` board. The `prj.conf` and `app.overlay` files define the specific configuration for the macropad.
     ```bash
