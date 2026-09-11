@@ -14,7 +14,7 @@ An end-to-end open-source wireless macropad built on top of the **Nordic nRF5284
 * **Dual Layer Architecture**: Full-featured matrix scanning + rotary encoder control.
 * **Zephyr RTOS Engine**: Event-driven multitasking, hardware-accelerated BLE stack, and flash settings storage.
 * **Companion App**: Cross-platform desktop GUI (Windows/Linux) built with Flutter for live keymap reassignment and sequence management.
-* **Custom PCB**: Designed from schematic to Gerber files using KiCad.
+* **Custom PCB**: Designed from schematic through routed 2-layer PCB and STEP model using KiCad.
 
 ---
 
@@ -27,7 +27,7 @@ Custom schematic and 2-layer PCB layout developed in KiCad, optimized for Nordic
   <img src="docs/kicad_3d.png" alt="KiCad PCB Layout" width="650">
 </p>
 
-* KiCad project source files, schematics (PDF), and production-ready Gerbers are located in the [`/Hardware`](./Hardware) directory.
+* KiCad project source files and the STEP model are located in the [`/Hardware`](./Hardware) directory.
 
 ---
 
@@ -60,7 +60,8 @@ Source code and setup instructions are located in the [`/Software`](./Software) 
 ## 📂 Repository Structure
 
 ```text
-├── Hardware/   # KiCad schematics, PCB layout, Gerbers, BOM
+├── Hardware/   # KiCad schematic, PCB layout, and STEP model
 ├── Firmware/   # Zephyr RTOS source code, devicetree overlays, prj.conf
 ├── Software/   # Flutter configuration application source
 └── docs/       # Media, hardware photos, and diagrams
+```
